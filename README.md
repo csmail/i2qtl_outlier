@@ -18,7 +18,7 @@ Scripts required for i2QTL outlier calling pipeline
 * 2.1 Data correction
 
 ### 3. Outlier calling
-* 3.1 Count rare variants linked to outliers/non-outliers
+* 3.1 Get variants linked to outliers/non-outliers
 
 ## 1.1 Variant annotation
 * Add gnomAD allele frequency and CADD score for each variant in VCF
@@ -60,7 +60,7 @@ done
 for var in snp indel; do
   for file in IPSCORE_HipSci_1kG.*_${var}_gnomadAF_CADD.vcf.gz; do 
     while read sample; do
-      sbatch intersect_gtf_vcf.sh $file $sample
+      scripts/intersect_gtf_vcf.sh $file $sample
     done < ../GTE_WGS_combined_sample_name.txt
   done
 done
@@ -90,7 +90,7 @@ iterator="iterator.txt" # Define different Z-score, MAF, and CADD thresholds (co
 
 for var in snp indel; do
   while read sample; do
-    sbatch outlier_rare_var.R $sample $var $exp_dat $iterator
+    scripts/outlier_rare_var.R $sample $var $exp_dat $iterator
   done < [list_of_sample_names].txt
 done
 ```
